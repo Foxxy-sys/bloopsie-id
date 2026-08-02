@@ -11,6 +11,39 @@
 @section('title', 'Shop All Products — Bloopsie.id')
 
 @section('content')
+
+<!-- ========================================== -->
+<!-- SISTEM KONVERSI MATA UANG (DYNAMIC CURRENCY) -->
+<!-- ========================================== -->
+@php
+    // 1. Ambil mata uang dari session (Default IDR jika tidak ada)
+    $currency = session('currency', 'IDR');
+    
+    // 2. Buat kurs konversi sederhana (Berdasarkan IDR)
+    // Catatan: Ini adalah kurs statis perkiraan.
+    $rates = [
+        'IDR' => 1,
+        'USD' => 0.000064, // Asumsi $1 = Rp 15.600
+        'SGD' => 0.000085, // Asumsi S$1 = Rp 11.700
+        'MYR' => 0.00030,  // Asumsi RM1 = Rp 3.300
+        'AUD' => 0.00010,  // Asumsi A$1 = Rp 10.000
+    ];
+
+    // 3. Simbol Mata Uang
+    $symbols = [
+        'IDR' => 'Rp',
+        'USD' => '$',
+        'SGD' => 'S$',
+        'MYR' => 'RM',
+        'AUD' => 'A$',
+    ];
+
+    // 4. Set Nilai Kurs & Simbol Aktif
+    $currentRate = $rates[$currency] ?? 1;
+    $currentSymbol = $symbols[$currency] ?? 'Rp';
+@endphp
+<!-- ========================================== -->
+
 <div class="wrap">
   <div class="breadcrumb"><a href="{{ route('home') }}">Home</a> / <span>Shop</span></div>
 
@@ -18,6 +51,12 @@
     <span class="eyebrow">Bloopsie Store</span>
     <h1>Shop All Products</h1>
     <p>Semua koleksi handmade Bloopsie ada di sini — stickers, journal goodies, sampai paket kejutan bulanan.</p>
+    
+    <!-- INDIKATOR MATA UANG AKTIF (Opsional, agar pembeli tahu) -->
+    <div style="margin-top: 15px; font-size: 0.85rem; color: var(--muted); background: var(--secondary); display: inline-block; padding: 4px 12px; border-radius: 20px;">
+        Prices displayed in: <strong>{{ $currency }}</strong>
+    </div>
+
   </section>
   <div class="torn-sm"></div>
 
@@ -110,7 +149,8 @@
             
             <a href="{{ route('product.detail', $p->id) }}" class="product-card" style="display: block; text-decoration: none; color: inherit;">
               <div class="product-photo">
-                <img src="{{ $p->cover_image ? asset('storage/'.$p->cover_image) : 'https://picsum.photos/seed/'.$p->id.'/400/400' }}" alt="{{ $p->name }}">
+                
+                <img src="{{ $p->cover_image ? asset('images/'.$p->cover_image) : 'https://picsum.photos/seed/'.$p->id.'/400/400' }}" alt="{{ $p->name }}">
                 
                 @if ($p->featured)
                   <span class="product-badge">New</span>
@@ -118,7 +158,6 @@
                   <span class="product-badge sale">Sold Out</span>
                 @endif
                 
-                <!-- Tambahkan event.preventDefault() agar tombol ini tidak ikut memicu pindah halaman -->
                 <button class="wishlist-mini" aria-label="Wishlist" data-id="{{ $p->id }}" onclick="event.preventDefault();">🤍</button>
               
               </div>
@@ -127,7 +166,14 @@
                 <h4>{{ $p->name }}</h4>
                 <div class="product-row">
                   <span>
-                    <span class="price">Rp {{ number_format($p->price, 0, ',', '.') }}</span>
+                    <!-- PENGHITUNGAN & FORMAT MATA UANG OTOMATIS -->
+                    <span class="price">
+                        {{ $currentSymbol }} 
+                        {{ $currency === 'IDR' 
+                            ? number_format($p->price, 0, ',', '.') 
+                            : number_format($p->price * $currentRate, 2, '.', ',') 
+                        }}
+                    </span>
                   </span>
                 </div>
               </div>

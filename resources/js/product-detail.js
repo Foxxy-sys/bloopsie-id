@@ -7,11 +7,21 @@ window.swapImg = function (el, src) {
     el.classList.add("active");
 };
 
+// --- PERUBAHAN ADA DI BAGIAN INI ---
 let qty = 1;
 window.changeQty = function (delta) {
-    qty = Math.max(1, qty + delta);
+    qty = Math.max(1, qty + delta); // Minimal qty adalah 1
+    
+    // 1. Update teks angka di layar (HTML)
     document.getElementById("qtyVal").textContent = qty;
+    
+    // 2. Update nilai di dalam hidden input form agar ikut terkirim ke sistem
+    let qtyInput = document.getElementById("qtyInput");
+    if(qtyInput) {
+        qtyInput.value = qty;
+    }
 };
+// ------------------------------------
 
 document.querySelectorAll(".tab-btn").forEach((btn) => {
     btn.addEventListener("click", () => {

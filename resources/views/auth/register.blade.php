@@ -113,6 +113,7 @@
         <span id="btnText">Register 🌸</span>
         <div class="spinner" id="btnSpinner"></div>
       </button>
+    </form> 
     
     <div class="auth-divider">
       <span>atau</span>

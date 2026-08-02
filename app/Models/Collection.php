@@ -21,6 +21,7 @@ class Collection extends Model
     ];
     public function products()
     {
-        return $this->hasMany(Product::class);
+        // Sesuaikan nama model Product jika berbeda
+        return $this->hasMany(Product::class, 'collection_id'); 
     }
 }

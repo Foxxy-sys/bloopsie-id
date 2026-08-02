@@ -18,19 +18,36 @@
 
   <div class="product-main">
     <div class="gallery">
+      @php
+          // Gambar utama
+          $mainImage = $product->cover_image ? asset('images/'.$product->cover_image) : 'https://picsum.photos/seed/'.$product->id.'/800/800';
+      @endphp
+
       <div class="gallery-main">
         @if ($product->featured)
             <div class="gallery-badge">Best Seller</div>
         @endif
         
-        <!-- Menampilkan gambar produk dari database -->
-        <img id="mainImg" src="{{ $product->cover_image ? asset('storage/'.$product->cover_image) : 'https://picsum.photos/seed/'.$product->id.'/800/800' }}" alt="{{ $product->name }}">
+        <!-- Gambar Utama -->
+        <img id="mainImg" src="{{ $mainImage }}" alt="{{ $product->name }}">
       </div>
       
-      <!-- Bagian Thumbnail (Jika kamu belum punya banyak gambar di DB, biarkan statis dulu atau gunakan loop jika sudah ada) -->
+      <!-- Bagian Thumbnail Tersinkronisasi -->
       <div class="gallery-thumbs">
-        <img src="{{ asset('Images/Produk 2.jpeg') }}" class="active" alt="Thumb 1" onclick="swapImg(this, '{{ asset('Images/Produk 2.jpeg') }}')">
-        <img src="{{ asset('Images/Produk 3.jpeg') }}" alt="Thumb 2" onclick="swapImg(this, '{{ asset('Images/Produk 3.jpeg') }}')">
+        <!-- Thumbnail 1: Selalu gunakan gambar cover sebagai thumbnail pertama -->
+        <img src="{{ $mainImage }}" class="active" alt="Cover Thumb" onclick="swapImg(this, '{{ $mainImage }}')">
+        
+        <!-- Thumbnail Tambahan: Looping dari tabel product_images -->
+        @if($product->images && $product->images->count() > 0)
+            @foreach($product->images as $gambarTambahan)
+                @php
+                    // Sama seperti di atas, sesuaikan 'storage/' atau 'images/' tergantung folder penyimpanan Anda
+                    $urlTambahan = asset('storage/' . $gambarTambahan->image);
+                @endphp
+                <!-- Cetak masing-masing gambar tambahan -->
+                <img src="{{ $urlTambahan }}" alt="Thumb Tambahan" onclick="swapImg(this, '{{ $urlTambahan }}')">
+            @endforeach
+        @endif
       </div>
     </div>
 
@@ -53,24 +70,32 @@
       <!-- Deskripsi Dinamis -->
       <p class="desc">{{ $product->description ?? 'Produk handmade eksklusif dari Bloopsie.id yang dikemas dengan penuh cinta.' }}</p>
 
-      <div class="qty-row">
-        <div class="qty-control">
-          <button onclick="changeQty(-1)">−</button>
-          <span id="qtyVal">1</span>
-          <button onclick="changeQty(1)">+</button>
-        </div>
-        <button class="wishlist-btn" aria-label="Wishlist">🤍</button>
-      </div>
+      <!-- FORM ADD TO CART / BUY NOW -->
+      <form action="{{ route('cart.add') }}" method="POST">
+        @csrf
+        <!-- Data rahasia yang dikirim ke sistem -->
+        <input type="hidden" name="product_id" value="{{ $product->id }}">
+        <input type="hidden" name="quantity" id="qtyInput" value="1">
 
-      <div class="action-row">
-        <!-- Jika stok habis, nonaktifkan tombol -->
-        @if($product->stock > 0)
-            <button class="btn btn-outline">Add To Cart</button>
-            <button class="btn btn-primary">Buy Now</button>
-        @else
-            <button class="btn btn-primary" style="background: var(--muted); cursor: not-allowed;" disabled>Sold Out</button>
-        @endif
-      </div>
+        <div class="qty-row">
+          <div class="qty-control">
+            <button type="button" onclick="changeQty(-1)">−</button>
+            <span id="qtyVal">1</span>
+            <button type="button" onclick="changeQty(1)">+</button>
+          </div>
+          <button type="button" class="wishlist-btn" aria-label="Wishlist">🤍</button>
+        </div>
+
+        <div class="action-row">
+          @if($product->stock > 0)
+              <!-- Beri name="action" agar Controller tahu tombol mana yang diklik -->
+              <button type="submit" name="action" value="cart" class="btn btn-outline">Add To Cart</button>
+              <button type="submit" name="action" value="buy" class="btn btn-primary">Buy Now</button>
+          @else
+              <button type="button" class="btn btn-primary" style="background: var(--muted); cursor: not-allowed;" disabled>Sold Out</button>
+          @endif
+        </div>
+      </form>
 
       <div class="meta-list">
         <div><span>SKU</span><strong>BLP-{{ str_pad($product->id, 4, '0', STR_PAD_LEFT) }}</strong></div>

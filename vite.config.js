@@ -12,10 +12,14 @@ export default defineConfig({
                 'resources/css/product-detail.css',
                 'resources/css/collections.css',
                 'resources/css/login.css',
+                'resources/css/profile.css',
+                'resources/css/orders.css',
+                'resources/css/payment.css',
                 'resources/js/app.js',
                 'resources/js/home.js',
                 'resources/js/shop.js',
-                'resources/js/login.js'
+                'resources/js/login.js',
+                'resources/js/profile.js'
             ],
             refresh: true,
         }),

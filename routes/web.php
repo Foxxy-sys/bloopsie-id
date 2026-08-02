@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 
 // 1. BUKA WEB LANGSUNG LEMPAR KE LOGIN
 Route::get('/', function () {
@@ -33,11 +34,15 @@ Route::get('/product/{id}', [ShopController::class, 'show'])->name('product.deta
 
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
+Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout');
+Route::patch('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
+Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
 
 
-Route::get('/collections', function () {
-    return view('pages.collections');
-})->name('collections');
+// HAPUS RUTE LAMA, LALU GANTI DENGAN INI:
+Route::get('/collections', [App\Http\Controllers\ShopController::class, 'collections'])->name('collections');
+
 
 Route::get('/contact', function () {
     return view('pages.contact');
@@ -55,6 +60,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    
+    // Cukup gunakan SATU route ini saja untuk orders:
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders');
+
+    Route::get('/payment', function () {
+        return view('pages.payment');
+    })->name('payment');
 });
 
 

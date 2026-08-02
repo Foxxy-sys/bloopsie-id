@@ -15,15 +15,15 @@
         
       <!-- BAGIAN CART YANG SUDAH DIPERBARUI -->
       <a href="{{ route('cart') }}" aria-label="Cart" style="background:none; border:none; font-size:1.05rem; position:relative; padding:6px; cursor:pointer; text-decoration:none; color:inherit;">
-        🛍️<span class="cart-dot"></span>
+        🛍️<span></span>
       </a>
       <!-- ================================== -->
 
       <div class="account-wrap">
         <button aria-label="Account" id="accountBtn" aria-haspopup="true" aria-expanded="false">👤</button>
         <div class="account-menu" id="accountMenu">
-          <a href="#">👋 My Account</a>
-          <a href="#">📦 My Orders</a>
+          <a href="{{ route('profile.edit') }}">👋 My Account</a>
+          <a href="{{ route('orders') }}">📦 My Orders</a>
           <div class="divider"></div>
           <!-- FORM LOGOUT -->
           <form method="POST" action="{{ route('logout') }}">

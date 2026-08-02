@@ -20,7 +20,7 @@
       <span class="eyebrow">About Bloopsie</span>
       <h1>Made With Love,<br>Created For <em>Happy Mail.</em></h1>
       <p>Setiap ilustrasi kami dimulai dari secarik ide, lalu berubah menjadi karya kecil yang siap menghiasi harimu.</p>
-      <a href="{{ route('home') }}#collection" class="btn btn-primary btn-ripple">Explore Collections</a>
+      <a href="{{ route('collections') }}#collection" class="btn btn-primary btn-ripple">Explore Collections</a>
     </div>
     <div class="hero-img">
       <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&q=80&w=800" alt="Workspace">

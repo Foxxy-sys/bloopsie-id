@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Collection;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ShopController extends Controller
@@ -98,5 +100,25 @@ class ShopController extends Controller
         
         // Kirim data $product ke view product-detail
         return view('pages.product-detail', compact('product'));
+    }
+    public function collections()
+    {
+        // 1. Ganti Category menjadi Collection, dan tarik relasi products-nya
+        $currentCollection = Collection::with('products')->latest('created_at')->first();
+
+        $archives = [];
+        if ($currentCollection) {
+            // 2. Gunakan Collection lagi di sini
+            $archives = Collection::where('id', '!=', $currentCollection->id)
+                ->with('products')
+                ->withCount('products') 
+                ->orderBy('created_at', 'desc')
+                ->get()
+                ->groupBy(function($val) {
+                    return Carbon::parse($val->created_at)->format('Y'); 
+                });
+        }
+
+        return view('pages.collections', compact('currentCollection', 'archives'));
     }
 }

@@ -1,0 +1,110 @@
+/* ============ PAYMENT PAGE ============ */
+.payment-wrapper {
+    max-width: 600px;
+    margin: 40px auto 100px;
+    background: var(--surface);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    padding: 40px;
+    text-align: center;
+    border-top: 8px solid var(--primary);
+}
+
+.payment-icon {
+    font-size: 4rem;
+    margin-bottom: 16px;
+    animation: bounceIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes bounceIn {
+    0% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.payment-header h1 {
+    font-size: 2rem;
+    color: var(--text);
+    margin-bottom: 8px;
+    line-height: 1.2;
+}
+
+.payment-header p {
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin-bottom: 32px;
+}
+
+.invoice-box {
+    background: var(--background);
+    border: 1.5px dashed rgba(74, 58, 58, 0.15);
+    border-radius: var(--radius-sm);
+    padding: 24px;
+    margin-bottom: 32px;
+    text-align: left;
+}
+
+.invoice-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    font-size: 0.95rem;
+}
+
+.invoice-row:last-child {
+    margin-bottom: 0;
+}
+
+.invoice-row.total {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1.5px solid rgba(74, 58, 58, 0.1);
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--primary-dark);
+}
+
+.payment-instructions {
+    background: #FFF;
+    border: 1px solid rgba(74, 58, 58, 0.08);
+    border-radius: var(--radius-sm);
+    padding: 24px;
+    margin-bottom: 32px;
+}
+
+.qr-placeholder {
+    width: 200px;
+    height: 200px;
+    background: var(--secondary);
+    margin: 0 auto 16px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: var(--primary-dark);
+    border: 2px solid var(--primary);
+}
+
+.va-number {
+    font-family: monospace;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text);
+    background: var(--background);
+    padding: 12px 24px;
+    border-radius: 8px;
+    display: inline-block;
+    letter-spacing: 2px;
+    margin: 16px 0;
+}
+
+.payment-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+@media (max-width: 640px) {
+    .payment-wrapper { padding: 30px 20px; margin: 20px; }
+}

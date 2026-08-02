@@ -24,6 +24,7 @@
 <div class="torn-sm"></div>
 
 <!-- CURRENT COLLECTION -->
+@if($currentCollection)
 <section class="current-col-bg">
   <div class="wrap">
     <div class="section-head" style="margin-bottom:40px;">
@@ -32,24 +33,30 @@
 
     <div class="collection-card">
       <div class="collection-img">
-        <img src="{{ asset('images/Produk 1.jpeg') }}" alt="Pink Fairy Collection">
+        {{-- Ganti 'cover_image' dengan nama kolom gambar di database kamu --}}
+        <img src="{{ asset('images/' . $currentCollection->banner) }}" alt="{{ $currentCollection->name }}">
         <div class="seal">
-          <span class="num">AUG</span>
-          <span class="lbl">2026</span>
+          <span class="num">{{ \Carbon\Carbon::parse($currentCollection->created_at)->format('M') }}</span>
+          <span class="lbl">{{ \Carbon\Carbon::parse($currentCollection->created_at)->format('Y') }}</span>
         </div>
       </div>
       <div class="collection-body">
-        <div class="countdown-badge">🌸 August 2026 <span>• Ends in 12 Days</span></div>
-        <h3>Pink <span>Fairy</span></h3>
-        <p>Bawa keajaiban kecil ke dalam jurnalmu! Koleksi Pink Fairy bulan Agustus menghadirkan nuansa magis.</p>
+        <div class="countdown-badge">
+            🌸 {{ \Carbon\Carbon::parse($currentCollection->created_at)->format('F Y') }}
+        </div>
+        
+        <h3>{{ $currentCollection->name }}</h3>
+        <p>{{ $currentCollection->description ?? 'Koleksi eksklusif bulan ini menghadirkan nuansa magis.' }}</p>
+        
         <div class="current-col-actions">
           <button class="btn btn-primary">Explore Collection</button>
-          <button class="btn btn-outline">View All Products</button>
+          <a href="{{ route('shop') }}" class="btn btn-outline">View All Products</a>
         </div>
       </div>
     </div>
   </div>
 </section>
+@endif
 
 <!-- STORY DIVIDER -->
 <div class="wrap story-divider-wrap">
@@ -63,22 +70,34 @@
 
 <!-- ARCHIVE SECTION -->
 <section class="archive wrap">
-  <h2 class="year-divider">2026</h2>
-  <div class="archive-grid">
-    <!-- Di Phase Backend nanti, ini bakal kita looping dari Database -->
-    <div class="archive-card">
-      <div class="archive-photo">
-        <img src="https://images.unsplash.com/photo-1490735891913-40897cdaafd1?auto=format&fit=crop&q=80&w=600" alt="Blue Memories">
-        <span class="status-badge instock">● Masih Bisa Dibeli</span>
+  
+  @forelse($archives as $year => $collections)
+      <!-- Pemisah Tahun (contoh: 2026, 2025) -->
+      <h2 class="year-divider">{{ $year }}</h2>
+      
+      <div class="archive-grid">
+        @foreach($collections as $col)
+            <div class="archive-card">
+              <div class="archive-photo">
+                <img src="{{ asset('images/' . $col->cover_image) }}" alt="{{ $col->name }}">
+                
+                {{-- Jika kamu punya logika untuk cek stok di model Collection, pasang di sini --}}
+                <span class="status-badge instock">● Masih Tersedia</span>
+              </div>
+              <div class="archive-info">
+                <span class="theme-badge theme-blue">{{ \Carbon\Carbon::parse($col->created_at)->format('F Y') }}</span>
+                <h4>{{ $col->name }}</h4>
+                <span class="product-count">{{ $col->products_count }} Products</span>
+                <button class="btn btn-outline btn-sm btn-block">Shop "{{ $col->name }}"</button>
+              </div>
+            </div>
+        @endforeach
       </div>
-      <div class="archive-info">
-        <span class="theme-badge theme-blue">July 2026</span>
-        <h4>Blue Memories</h4>
-        <span class="product-count">12 Products</span>
-        <button class="btn btn-outline btn-sm btn-block">Shop "Blue Memories"</button>
+  @empty
+      <div style="text-align: center; padding: 2rem; color: var(--muted);">
+          <p>Belum ada koleksi terdahulu.</p>
       </div>
-    </div>
-    <!-- ... tambahkan archive-card lainnya ... -->
-  </div>
+  @endforelse
+
 </section>
 @endsection

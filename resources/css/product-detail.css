@@ -462,6 +462,7 @@ nav {
     color: var(--muted);
     font-size: 0.93rem;
     max-width: 700px;
+    padding-bottom: 80px;
 }
 .tab-panel.active {
     display: block;
