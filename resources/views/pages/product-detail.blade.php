@@ -8,98 +8,59 @@
     @vite(['resources/js/product-detail.js'])
 @endpush
 
-@section('title', $product->name . ' — Bloopsie.id')
+@section('title', 'Fairy Garden Stickers — Bloopsie.id')
 
 @section('content')
 <div class="wrap">
   <div class="breadcrumb">
-    <a href="{{ route('home') }}">Home</a> / <a href="{{ route('shop') }}">Shop</a> / <span>{{ $product->name }}</span>
+    <a href="{{ route('home') }}">Home</a> / <a href="{{ route('shop') }}">Shop</a> / <span>Fairy Garden Stickers</span>
   </div>
 
   <div class="product-main">
     <div class="gallery">
-      @php
-          // Gambar utama
-          $mainImage = $product->cover_image ? asset('images/'.$product->cover_image) : 'https://picsum.photos/seed/'.$product->id.'/800/800';
-      @endphp
-
       <div class="gallery-main">
-        @if ($product->featured)
-            <div class="gallery-badge">Best Seller</div>
-        @endif
-        
-        <!-- Gambar Utama -->
-        <img id="mainImg" src="{{ $mainImage }}" alt="{{ $product->name }}">
+        <div class="gallery-badge">Best Seller</div>
+        <img id="mainImg" src="{{ asset('Images/Produk 1.jpeg') }}" alt="Fairy Garden Sticker">
       </div>
-      
-      <!-- Bagian Thumbnail Tersinkronisasi -->
       <div class="gallery-thumbs">
-        <!-- Thumbnail 1: Selalu gunakan gambar cover sebagai thumbnail pertama -->
-        <img src="{{ $mainImage }}" class="active" alt="Cover Thumb" onclick="swapImg(this, '{{ $mainImage }}')">
-        
-        <!-- Thumbnail Tambahan: Looping dari tabel product_images -->
-        @if($product->images && $product->images->count() > 0)
-            @foreach($product->images as $gambarTambahan)
-                @php
-                    // Sama seperti di atas, sesuaikan 'storage/' atau 'images/' tergantung folder penyimpanan Anda
-                    $urlTambahan = asset('storage/' . $gambarTambahan->image);
-                @endphp
-                <!-- Cetak masing-masing gambar tambahan -->
-                <img src="{{ $urlTambahan }}" alt="Thumb Tambahan" onclick="swapImg(this, '{{ $urlTambahan }}')">
-            @endforeach
-        @endif
+        <img src="{{ asset('Images/Produk 2.jpeg') }}" alt="Sticker Sheet 2" onclick="swapImg(this, '{{ asset('Images/Produk 2.jpeg') }}')">
+        <img src="{{ asset('Images/Produk 3.jpeg') }}" alt="Sticker Sheet 3" onclick="swapImg(this, '{{ asset('Images/Produk 3.jpeg') }}')">
+        <img src="{{ asset('Images/Produk 4.jpeg') }}" alt="Sticker Sheet 4" onclick="swapImg(this, '{{ asset('Images/Produk 4.jpeg') }}')">
+        <img src="{{ asset('Images/Produk 5.jpeg') }}" alt="Sticker Sheet 5" onclick="swapImg(this, '{{ asset('Images/Produk 5.jpeg') }}')">
       </div>
     </div>
 
     <div class="product-info">
-      <span class="cat">{{ $product->category->name ?? 'Bloopsie Collection' }}</span>
-      
-      <!-- Nama Produk Dinamis -->
-      <h1>{{ $product->name }}</h1>
-      
+      <span class="cat">Sticker Sheet · August Collection</span>
+      <h1>Fairy Garden Stickers</h1>
       <div class="rating-row">
         <span class="stars">★★★★★</span>
-        <span>4.9 dari 5 · 218 ulasan</span>
+        <span>4.9 dari 5 · 218 ulasan · 1.2k terjual</span>
       </div>
-      
       <div class="price-block">
-        <!-- Harga Dinamis -->
-        <span class="price-now">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
+        <span class="price-now">Rp 35.000</span>
+        <span class="price-old">Rp 42.000</span>
       </div>
-      
-      <!-- Deskripsi Dinamis -->
-      <p class="desc">{{ $product->description ?? 'Produk handmade eksklusif dari Bloopsie.id yang dikemas dengan penuh cinta.' }}</p>
+      <p class="desc">Sticker sheet A6 dengan tema Pink Fairy — glitter laminated, kiss cut, vinyl waterproof. Cocok untuk journaling, hadiah kecil, atau menghias mailbox favoritmu.</p>
 
-      <!-- FORM ADD TO CART / BUY NOW -->
-      <form action="{{ route('cart.add') }}" method="POST">
-        @csrf
-        <!-- Data rahasia yang dikirim ke sistem -->
-        <input type="hidden" name="product_id" value="{{ $product->id }}">
-        <input type="hidden" name="quantity" id="qtyInput" value="1">
-
-        <div class="qty-row">
-          <div class="qty-control">
-            <button type="button" onclick="changeQty(-1)">−</button>
-            <span id="qtyVal">1</span>
-            <button type="button" onclick="changeQty(1)">+</button>
-          </div>
-          <button type="button" class="wishlist-btn" aria-label="Wishlist">🤍</button>
+      <div class="qty-row">
+        <div class="qty-control">
+          <button onclick="changeQty(-1)">−</button>
+          <span id="qtyVal">1</span>
+          <button onclick="changeQty(1)">+</button>
         </div>
+        <button class="wishlist-btn" aria-label="Wishlist">🤍</button>
+      </div>
 
-        <div class="action-row">
-          @if($product->stock > 0)
-              <!-- Beri name="action" agar Controller tahu tombol mana yang diklik -->
-              <button type="submit" name="action" value="cart" class="btn btn-outline">Add To Cart</button>
-              <button type="submit" name="action" value="buy" class="btn btn-primary">Buy Now</button>
-          @else
-              <button type="button" class="btn btn-primary" style="background: var(--muted); cursor: not-allowed;" disabled>Sold Out</button>
-          @endif
-        </div>
-      </form>
+      <div class="action-row">
+        <button class="btn btn-outline">Add To Cart</button>
+        <button class="btn btn-primary">Buy Now</button>
+      </div>
 
       <div class="meta-list">
-        <div><span>SKU</span><strong>BLP-{{ str_pad($product->id, 4, '0', STR_PAD_LEFT) }}</strong></div>
-        <div><span>Stok</span><strong>{{ $product->stock > 0 ? $product->stock . ' tersedia' : 'Habis' }}</strong></div>
+        <div><span>SKU</span><strong>BLP-STK-0142</strong></div>
+        <div><span>Ukuran</span><strong>A6 (10.5 × 14.8 cm)</strong></div>
+        <div><span>Material</span><strong>Vinyl, Glossy Laminated</strong></div>
         <div><span>Pengiriman</span><strong>Domestik & Internasional</strong></div>
       </div>
     </div>
@@ -108,14 +69,22 @@
   <div class="tabs">
     <button class="tab-btn active" data-tab="desc">Description</button>
     <button class="tab-btn" data-tab="shipping">Shipping Info</button>
+    <button class="tab-btn" data-tab="reviews">Reviews (218)</button>
   </div>
 
   <div class="tab-panel active" id="desc">
-    <!-- Menggunakan nl2br agar enter di deskripsi database terbaca -->
-    <p>{!! nl2br(e($product->description)) !!}</p>
+    <p>Setiap sticker digambar tangan oleh tim ilustrasi Bloopsie, terinspirasi dari tema koleksi bulan berjalan.</p>
+    <ul>
+      <li>Kiss cut — mudah dilepas</li>
+      <li>Glitter laminated finishing</li>
+      <li>Waterproof & tahan lama</li>
+    </ul>
   </div>
   <div class="tab-panel" id="shipping">
     <p>Pesanan diproses dalam 1–2 hari kerja setelah pembayaran dikonfirmasi.</p>
+  </div>
+  <div class="tab-panel" id="reviews">
+     <!-- Review Items -->
   </div>
 </div>
 
@@ -125,9 +94,7 @@
       <span class="eyebrow">You May Also Like</span>
       <h2>Produk Terkait</h2>
     </div>
-    <div class="products-grid" id="relatedGrid">
-        <!-- Biarkan JS yang merender atau bisa kamu ganti pakai loop dari Controller nantinya -->
-    </div>
+    <div class="products-grid" id="relatedGrid"></div>
   </div>
 </section>
 @endsection

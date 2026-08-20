@@ -12,7 +12,7 @@
 
 @section('content')
 <div class="wrap">
-  <div class="breadcrumb"><a href="{{ route('home') }}">Home</a> / <span>Contact</span></div>
+  <div class="breadcrumb"><a href="bloopsie-homepage-prototype.html">Home</a> / <span>Contact</span></div>
   
   <section class="contact-hero">
     <span class="eyebrow">Let's Connect</span>

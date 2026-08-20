@@ -19,8 +19,8 @@
       <h1>Handmade Happiness,<br><em>Delivered</em> To Your Mailbox.</h1>
       <p class="sub">Cute stationery, adorable stickers, and monthly collections designed to brighten your day — packed with love, one envelope at a time.</p>
       <div class="hero-ctas">
-        <a href="{{ route('collections') }}" class="btn btn-primary btn-ripple">Shop Collection</a>
-        <a href="{{ route('shop') }}" class="btn btn-outline">Explore Products</a>
+        <button class="btn btn-primary btn-ripple">Shop Collection</button>
+        <button class="btn btn-outline">Explore Products</button>
       </div>
     </div>
     <div class="hero-visual reveal">
@@ -41,14 +41,14 @@
     <div class="collection-card reveal">
       <div class="collection-img">
         <img src="Images/Produk 1.jpeg" alt="August Collection - Pink Fairy">
-        <div class="seal"><span class="num"></span><span class="lbl">Days Left</span></div>
+        <div class="seal"><span class="num">20</span><span class="lbl">Days Left</span></div>
       </div>
       <div class="collection-body">
         <span class="eyebrow">Current Monthly Collection</span>
         <h3>August — <span>Pink Fairy</span></h3>
         <p>Setiap bulan, Bloopsie menghadirkan satu tema baru — mulai dari ilustrasi, warna, sampai packaging — supaya setiap koleksi terasa seperti surat cinta yang berbeda.</p>
         <div class="hero-ctas">
-          <a href="{{ route('collections') }}" class="btn btn-primary btn-ripple">Explore Collection</a>
+          <button class="btn btn-primary btn-ripple">Explore Collection</button>
         </div>
       </div>
     </div>
@@ -214,7 +214,7 @@
     <div class="cta-banner reveal">
       <h2>Ready To Start Collecting?</h2>
       <p>Explore this month's collection sebelum koleksinya habis.</p>
-      <a href="{{ route('shop') }}" class="btn btn-primary btn-ripple">Shop Now</a>
+      <button class="btn btn-primary btn-ripple">Shop Now</button>
     </div>
   </div>
 </section>

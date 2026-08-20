@@ -192,67 +192,7 @@ nav {
     cursor: pointer;
     font-size: 1.3rem;
 }
-.account-wrap {
-    position: relative;
-}
-.account-menu {
-    position: absolute;
-    top: calc(100% + 12px);
-    right: 0;
-    background: var(--surface);
-    border-radius: 16px;
-    box-shadow: 0 20px 40px -14px rgba(74, 58, 58, 0.3);
-    min-width: 190px;
-    padding: 10px;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-8px);
-    transition:
-        opacity 0.22s ease,
-        transform 0.22s ease,
-        visibility 0.22s ease;
-    z-index: 200;
-    border: 1px solid rgba(74, 58, 58, 0.08);
-}
-.account-menu.open {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-.account-menu a,
-.account-menu button {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
-    text-align: left;
-    padding: 10px 12px;
-    border-radius: 10px;
-    font-size: 0.86rem;
-    font-weight: 500;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--text);
-    font-family: var(--sans);
-}
-.account-menu a:hover,
-.account-menu button:hover {
-    background: var(--secondary);
-}
-.account-menu .divider {
-    height: 1px;
-    background: rgba(74, 58, 58, 0.08);
-    margin: 6px 4px;
-}
-.account-menu .logout-btn {
-    color: var(--primary-dark);
-    font-weight: 700;
-}
-.account-menu .logout-btn:hover {
-    background: var(--accent);
-    color: #fff;
-}
+
 .breadcrumb {
     font-size: 0.82rem;
     color: var(--muted);
@@ -462,7 +402,6 @@ nav {
     color: var(--muted);
     font-size: 0.93rem;
     max-width: 700px;
-    padding-bottom: 80px;
 }
 .tab-panel.active {
     display: block;
